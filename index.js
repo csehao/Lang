@@ -1,18 +1,18 @@
 const { Judge, Seer, Witch, Hunter, Guard, Wolf, Villager } = require("./lib/character.js");
 
 const characters = [
-    new Seer(), 
-    new Witch(), 
-    new Hunter(),
-    new Guard(),
-    new Wolf(),
-    new Wolf(),
-    new Wolf(),
-    new Wolf(),
-    new Villager(),
-    new Villager(),
-    new Villager(),
-    new Villager()
+    new Seer().setPosition(0), 
+    new Witch().setPosition(1), 
+    new Hunter().setPosition(2),
+    new Guard().setPosition(3),
+    new Wolf().setPosition(4),
+    new Wolf().setPosition(5),
+    new Wolf().setPosition(6),
+    new Wolf().setPosition(7),
+    new Villager().setPosition(8),
+    new Villager().setPosition(9),
+    new Villager().setPosition(10),
+    new Villager().setPosition(11)
 ];
 
 function verifyDeath(characters, deathList){
@@ -74,5 +74,7 @@ verifyDeath(
     characters,
     [ true, false, false, false, false, false, false, false, false, false, false, true ]
 );
+
+console.log(characters);
 
 console.log('HelloWorld');
