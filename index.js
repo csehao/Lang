@@ -18,7 +18,15 @@ const characters = [
 function verifyDeath(characters, deathList){
     for (var index in characters) {
         if(characters[index].dead != deathList[index]){
-            process.stdout.write("Character " + i + " status miss match.");
+            process.stdout.write("Character " + i + " status mismatch.");
+        }
+    }
+}
+
+function verifyReveal(characters, revealList){
+    for (var index in characters) {
+        if(characters[0].reveal(index) != characters[index].faction){
+            process.stdout.write("Character " + index + " faction mismatch.");
         }
     }
 }
@@ -29,12 +37,10 @@ for(var index in characters){
 }
 
 console.log("Seer Reveal");
-
-/*
-for(var index in characters){
-    console.log(characters[0].reveal(index));
-}
-*/
+verifyReveal(
+    characters, 
+    [ true, true, true, true, false, false, false, false, true, true, true, true ]
+);
 
 verifyDeath(
     characters,
@@ -75,6 +81,6 @@ verifyDeath(
     [ true, false, false, false, false, false, false, false, false, false, false, true ]
 );
 
-console.log(characters);
+//console.log(characters);
 
 console.log('HelloWorld');
