@@ -26,9 +26,10 @@ const generateNewGame = () => {
 function verifyDeath(characters, deathList){
     for (var index in game.characters) {
         if(game.characters[index].dead != deathList[index]){
-            process.stdout.write("Character " + index + " status mismatch.");
+            process.stdout.write("Character " + index + " status mismatch.\n");
         }
     }
+    console.log();
 }
 
 function verifyReveal(judge, characters, revealList){
@@ -36,9 +37,10 @@ function verifyReveal(judge, characters, revealList){
         game.characters[0].reveal(index);
         judge.resolveStatus();
         if(game.characters[0].getRevealResult() != game.characters[index].faction){
-            process.stdout.write("Character " + index + " faction mismatch.");
+            process.stdout.write("Character " + index + " faction mismatch. \n");
         }
     }
+    console.log();
 }
 
 let game = generateNewGame(); 
