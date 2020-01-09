@@ -1,4 +1,20 @@
 const { Judge, Seer, Witch, Hunter, Guard, Wolf, Villager } = require("./lib/character.js");
+const { GameFactory } = require("./lib/game");
+
+const gamegame = new GameFactory().createGame({characterCodeList: [
+    "Y",
+    "N",
+    "Li",
+    "S",
+    "L",
+    "L",
+    "L",
+    "L",
+    "M",
+    "M",
+    "M",
+    "M",
+]});
 
 const generateNewGame = () => {
     const characters = [
