@@ -1,137 +1,23 @@
-const { Judge, Seer, Witch, Hunter, Guard, Wolf, Villager } = require("./lib/character.js");
-const { GameFactory } = require("./lib/game");
+const app = require('express')();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
-const gamegame = new GameFactory().createGame({characterCodeList: [
-    "Y",
-    "N",
-    "Li",
-    "S",
-    "L",
-    "L",
-    "L",
-    "L",
-    "M",
-    "M",
-    "M",
-    "M",
-]});
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/view/index.html');
+});
 
-const generateNewGame = () => {
-    const characters = [
-        new Seer().setPosition(0),
-        new Witch().setPosition(1),
-        new Hunter().setPosition(2),
-        new Guard().setPosition(3),
-        new Wolf().setPosition(4),
-        new Wolf().setPosition(5),
-        new Wolf().setPosition(6),
-        new Wolf().setPosition(7),
-        new Villager().setPosition(8),
-        new Villager().setPosition(9),
-        new Villager().setPosition(10),
-        new Villager().setPosition(11)
-    ];
-    const judge = new Judge().setCharacters(characters);
-    for (var index in characters) {
-        characters[index].setJudge(judge);
-    }
-    return { characters, judge };
-} 
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.broadcast.emit('hi');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+});
 
-
-function verifyDeath(characters, deathList){
-    for (var index in game.characters) {
-        if(game.characters[index].dead != deathList[index]){
-            process.stdout.write("Character " + index + " status mismatch.\n");
-        }
-    }
-    console.log();
-}
-
-function verifyReveal(judge, characters, revealList){
-    for (var index in game.characters) {
-        game.characters[0].reveal(index);
-        judge.resolveStatus();
-        if(game.characters[0].getRevealResult() != game.characters[index].faction){
-            process.stdout.write("Character " + index + " faction mismatch. \n");
-        }
-    }
-    console.log();
-}
-
-let game = generateNewGame(); 
-console.log("Seer Reveal");
-verifyReveal(
-    game.judge,
-    game.characters, 
-    [ true, true, true, true, false, false, false, false, true, true, true, true ]
-);
-
-verifyDeath(
-    game.characters,
-    [ false, false, false, false, false, false, false, false, false, false, false, false ]
-);
-
-game = generateNewGame(); 
-console.log("Wolf Kill");
-
-game.characters[4].kill(0);
-game.characters[1].setDaoFa(1, 0);
-
-game.judge.resolveStatus();
-verifyDeath(
-    game.characters,
-    [ true, false, false, false, false, false, false, false, false, false, false, false ]
-);
-
-game = generateNewGame(); 
-console.log("Wolf Kill");
-game.characters[4].kill(0);
-game.characters[1].setDaoFa(1, 0);
-console.log("Witch Med");
-game.characters[1].useMed();
-
-game.judge.resolveStatus();
-verifyDeath(
-    game.characters,
-    [ false, false, false, false, false, false, false, false, false, false, false, false ]
-);
-
-game = generateNewGame(); 
-console.log("Wolf Kill");
-game.characters[4].kill(0);
-game.characters[1].setDaoFa(1, 0);
-console.log("Guard guard");
-game.characters[3].guard(0);
-
-game.judge.resolveStatus();
-verifyDeath( game.characters, [ false, false, false, false, false, false, false, false, false, false, false, false ]);
-
-game = generateNewGame(); 
-console.log("Wolf Kill");
-game.characters[4].kill(0);
-game.characters[1].setDaoFa(1, 0);
-console.log("Witch Med");
-game.characters[1].useMed();
-console.log("Guard guard");
-game.characters[3].guard(0);
-
-game.judge.resolveStatus();
-verifyDeath(
-    game.characters,
-    [ true, false, false, false, false, false, false, false, false, false, false, false ]
-);
-
-game = generateNewGame(); 
-console.log("Hunter Hunt");
-game.characters[2].hunt(11);
-
-game.judge.resolveStatus();
-verifyDeath(
-    game.characters,
-    [ false, false, false, false, false, false, false, false, false, false, false, true ]
-);
-
-//console.log(game.characters);
-
-console.log('HelloWorld');
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
