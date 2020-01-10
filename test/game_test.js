@@ -35,9 +35,18 @@ describe('Reguar Setting Test', () => {
             game.characterList[4].kill(0);
             game.characterList[1].fetchDaoFa();
             game.judge.resolveStatus();
-            console.log(getDeathList(game));
             expect(getDeathList(game)).to.deep.equal(
                 [true, false, false, false, false, false, false, false, false, false, false, false]
+            );
+        });
+        it('Lang Kill One None Witch Character and Use Med Test', () => {
+            assert.equal([1, 2, 3].indexOf(4), -1);
+            game.characterList[4].kill(0);
+            game.characterList[1].fetchDaoFa();
+            game.characterList[1].useMed();
+            game.judge.resolveStatus();
+            expect(getDeathList(game)).to.deep.equal(
+                [false, false, false, false, false, false, false, false, false, false, false, false]
             );
         });
     });
