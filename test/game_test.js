@@ -33,8 +33,9 @@ describe('Reguar Setting Test', () => {
         it('Lang Kill One Character Test', () => {
             assert.equal([1, 2, 3].indexOf(4), -1);
             game.characterList[4].kill(0);
-            game.characterList[1].setDaoFa(1, 0);
+            game.characterList[1].fetchDaoFa();
             game.judge.resolveStatus();
+            console.log(getDeathList(game));
             expect(getDeathList(game)).to.deep.equal(
                 [true, false, false, false, false, false, false, false, false, false, false, false]
             );
