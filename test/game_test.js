@@ -40,7 +40,7 @@ describe('Reguar Setting Test', () => {
             for (const index in game.characterList) {
                 resetGame();
                 const revealTarget = parseInt(index); 
-                const faction = game.characterList[0].reveal(revealTarget).getRevealResult();
+                const faction = game.characterList[0].reveal(revealTarget);
                 expect(faction).to.equal(game.judge.characters[revealTarget].faction);
             }
         });
